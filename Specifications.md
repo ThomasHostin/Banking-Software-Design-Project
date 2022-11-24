@@ -15,9 +15,14 @@ The app will therefore propose 3 micro-services :
 
 The technologies we will use for this projects are the following :
 
+For the developpement part : 
+
  - Angular
  - Node.js
  - Spring Boot
- - PostgreSQL
- - pgAdmin
- - Java
+ - java
+
+For the database gestion part :
+
+ - PostgreSQL : PostgreSQL is a database gestion system that will allow us to manage the users data and their art
+ - pgAdmin : pgAdmin will allow us to navigate in our database during the testing phase
