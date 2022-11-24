@@ -2,7 +2,7 @@
 
 Our goal for this project is to design a web application for artist.
 
-This application will allow them to post their art on share it with other artist/people,
+This application will allow them to post their art and share it with other artist/people.
 They have the possibility to accompany their art with a comment and some tags to be easily retrieve by other users.
 
 The app will therefore propose 3 micro-services :
