@@ -13,7 +13,7 @@ The app will therefore propose 3 micro-services :
 
 # Technologies
 
-The chosen technologies are :
+The technologies we will use for this projects are the following :
 
  - Angular
  - Node.js
