@@ -17,10 +17,13 @@ The technologies we will use for this projects are the following :
 
 For the developpement part : 
 
- - Angular
- - Node.js
- - Spring Boot
- - java
+ - Angular: frontend framework worldly used to build single page application. Component based, it suits to build scalable web application. It has a collection of well-integrated libraries that cover a wide variety of features including routing, form management, client-server communication, progressive web apps and also a suite of developer tools to help you develop, build, test, and update your code via the Angular CLI.
+
+ - Node.js: Node. js is an open source development platform for executing JavaScript code server-side. it is evented and non-blocking I/O.
+
+ - Spring Boot: opensource java-based framework used to create micro-services.
+
+ - java: Object Oriented Programming Language, java is platform independent that suits to a single page web application.
 
 For the database gestion part :
 
