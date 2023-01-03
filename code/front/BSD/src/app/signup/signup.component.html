@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+<div class="signup-container">
+    <form (ngSubmit)="signup(signupForm)" #signupForm="ngForm">
+        <h1>Créer un compte</h1>
+        <div class="form-group">
+            <label for="email">Adresse électronique:</label>
+            <input type="email" id="email" name="email" [(ngModel)]="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" [(ngModel)]="password" required>
+        </div>
+        <button type="submit" [disabled]="signupForm.invalid">Créer un compte</button>
+    </form>
+</div>
