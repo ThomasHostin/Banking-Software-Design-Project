@@ -1,20 +1,14 @@
-
 package artists.gallery.bsd.project.controller;
 
-import artists.gallery.bsd.project.model.Image;
 import artists.gallery.bsd.project.model.User;
-import artists.gallery.bsd.project.services.ImageService;
 import artists.gallery.bsd.project.services.UserService;
 import artists.gallery.bsd.project.vo.UserRequestVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
