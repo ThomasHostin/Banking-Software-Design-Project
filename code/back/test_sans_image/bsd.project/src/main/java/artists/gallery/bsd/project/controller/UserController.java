@@ -1,12 +1,10 @@
 package artists.gallery.bsd.project.controller;
 
 import artists.gallery.bsd.project.model.User;
-import artists.gallery.bsd.project.repository.UserRepository;
 import artists.gallery.bsd.project.services.UserService;
 import artists.gallery.bsd.project.vo.UserRequestVo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +17,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    @Qualifier("userService")
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
 
     @GetMapping("/user/{userId}")
     @CrossOrigin
@@ -32,20 +27,14 @@ public class UserController {
 
     @GetMapping("/users")
     @CrossOrigin
-    public List<User> getAllUsers() {
+    public List<UserRequestVo> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping("/user/register")
     @CrossOrigin
-    public ResponseEntity<String> registerNewUser(@RequestBody UserRequestVo userRequestVo) {
-        Boolean exist = userService.registerNewUser(userRequestVo);
-        String userName = userRequestVo.getUsername();
-        if (!exist) {
-            return new ResponseEntity<>("New user " + userName + " has been registered", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("User name "+userName+" already exists", HttpStatus.UNAUTHORIZED);
-        }
+    public void registerNewUser(@RequestBody UserRequestVo userRequestVo) {
+        userService.registerNewUser(userRequestVo);
     }
 
     @PostMapping("/user/login")
@@ -63,12 +52,6 @@ public class UserController {
     @CrossOrigin
     public Integer getNumberOfUsers(){
         return userService.getNumberOfUsers();
-    }
-
-    @DeleteMapping("/user/{userId}")
-    @CrossOrigin
-    public void deleteUserById(@PathVariable Long userId){
-        userService.deleteUserById(userId);
     }
 
 }

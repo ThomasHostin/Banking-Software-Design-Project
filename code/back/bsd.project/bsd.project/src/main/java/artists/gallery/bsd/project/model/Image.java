@@ -19,7 +19,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id", updatable = false, nullable = false)
-    private Long ImageId;
+    private Long imageId;
 
     @Column(columnDefinition = "image_name")
     private String imageName;
@@ -44,11 +44,11 @@ public class Image {
     private List<String> imageHashtags;
 
     public Long getImageId() {
-        return ImageId;
+        return imageId;
     }
 
     public void setImageId(Long imageId) {
-        ImageId = imageId;
+        imageId = imageId;
     }
 
     public String getImageName() {

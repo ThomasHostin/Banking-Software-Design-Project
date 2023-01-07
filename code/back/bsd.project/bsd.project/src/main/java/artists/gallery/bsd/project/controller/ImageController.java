@@ -4,21 +4,26 @@ import artists.gallery.bsd.project.model.Image;
 import artists.gallery.bsd.project.services.ImageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 
 @RestController
 public class ImageController {
 
+    @Autowired
+    private ImageService imageService;
 
-    private ImageService imageService = new ImageService();
+    @PostMapping("/image/upload")
+    public Image upload(@RequestParam("image") MultipartFile file, @RequestParam("image_name") String imageName, @RequestParam("description") String description) throws IOException {
+        return imageService.save(file, imageName, description);
+    }
 
-    @PostMapping("/upload")
-    public Image upload(@RequestParam("image") MultipartFile file,@RequestParam("image_name") String name,@RequestParam("desciption") String description,@RequestParam("username") String userName) throws IOException {
-        return imageService.save(file, name, description, userName);
+    @GetMapping("/image/{imageId}")
+    public Image findImageById(@PathVariable Long imageId) {
+        return imageService.findImageById(imageId);
     }
 }

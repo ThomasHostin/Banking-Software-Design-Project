@@ -5,8 +5,10 @@ import artists.gallery.bsd.project.model.User;
 import artists.gallery.bsd.project.repository.UserRepository;
 import artists.gallery.bsd.project.vo.UserRequestVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,35 +28,39 @@ public class UserService {
                 .build();
     }
 
-    public List<User> getAllUsers(){
+    public List<UserRequestVo> getAllUsers(){
 
         List<User> listU = new ArrayList<>();
+        List<UserRequestVo> listVo = new ArrayList<>();
 
         listU = userRepository.findAll();
 
-        return listU;
-    }
-
-    public Boolean registerNewUser(UserRequestVo userRequestVo) {
-        List<User> list = getAllUsers();
-        User user = new User();
-        boolean exist = false;
-
-        for(Integer i=0; i< list.size();i+=1){
-            if(list.get(i).getUserName().equals(userRequestVo.getUsername())){
-                exist = true;
-            }
+        for(Integer i=0; i< listU.size(); i+=1) {
+            User user = listU.get(i);
+            UserRequestVo userRequestVo = UserRequestVo.builder()
+                    .username(user.getUserName())
+                    .email(user.getEmail())
+                    .build();
+            listVo.add(userRequestVo);
         }
 
-        if(!exist) {
+        return listVo;
+    }
+
+    public void registerNewUser(UserRequestVo userRequestVo) {
+        List<UserRequestVo> list = getAllUsers();
+        User user = new User();
+        if(list.contains(userRequestVo)) {
             user = User.builder()
                     .userName(userRequestVo.getUsername())
                     .password(userRequestVo.getPassword())
                     .email(userRequestVo.getEmail())
                     .build();
+
             userRepository.save(user);
+        }else {
+            user = null;
         }
-        return exist;
     }
 
     public User login(UserRequestVo userRequestVo) {
@@ -66,13 +72,9 @@ public class UserService {
     }
 
         public Integer getNumberOfUsers(){
-            List<User> list = getAllUsers();
+            List<UserRequestVo> list = getAllUsers();
             Integer numberOfUsers = list.size();
             return numberOfUsers;
-        }
-
-        public void deleteUserById(Long userId){
-            userRepository.deleteById(userId);
         }
 
 }
