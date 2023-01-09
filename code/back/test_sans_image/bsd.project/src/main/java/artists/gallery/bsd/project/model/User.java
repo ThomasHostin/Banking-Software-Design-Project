@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -28,6 +30,9 @@ public class User {
 
     @Column(columnDefinition = "email")
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserLogin> logins = new ArrayList<>();
 
     public Long getUserId() {
         return userId;
@@ -59,5 +64,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<UserLogin> getLogins() {
+        return logins;
+    }
+
+    public void setLogins(List<UserLogin> logins) {
+        this.logins = logins;
     }
 }

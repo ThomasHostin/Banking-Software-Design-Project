@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class UserRequestVo {
 
     private String username;
-    private String email;
     private String password;
+    private String email;
 
     public String getUsername() {
         return username;

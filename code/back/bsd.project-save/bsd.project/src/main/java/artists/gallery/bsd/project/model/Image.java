@@ -36,7 +36,7 @@ public class Image {
     @Column(columnDefinition = "image_user_name")
     private String imageUserName;
     @Lob
-    //@Column(columnDefinition = "image")
+    @Column(columnDefinition = "image")
     private byte[] imageData;
 
     @Lob

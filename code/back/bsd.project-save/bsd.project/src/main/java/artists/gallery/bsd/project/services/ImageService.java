@@ -27,4 +27,8 @@ public class ImageService {
     public Image findImageById(Long imageId) {
         return imageRepository.findByImageId(imageId);
     }
+
+    public Image findLatestImageByUserName(String imageUserName){
+
+    }
 }

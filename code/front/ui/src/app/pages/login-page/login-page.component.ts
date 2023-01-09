@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/models/user';
+import { UserRequestVo } from 'src/app/models/userRequestVo';
+import { UserLogin } from 'src/app/models/UserLogin';
 
 @Component({
   selector: 'app-login-page',
@@ -18,22 +21,19 @@ export class LoginPageComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string = '';
+  userLogin: UserLogin = new UserLogin;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
-
-    this.loginForm 
-
-    this.authenticationService.logout();
-
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+    localStorage.clear();
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
 
   }
 
@@ -51,17 +51,35 @@ export class LoginPageComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authenticationService.login(this.f['username'].value, this.f['password'].value)
+    this.userService.login(this.loginForm.value)
       .pipe(first())
       .subscribe(
-        () => {
-          this.router.navigate([this.returnUrl]);
+        (data: any) => {
+          localStorage.setItem('currentUser', this.f['username'].value) 
+          let user : User = this.userService.getUser(this.f['username'].value);
+          console.log(user.username);         
+          this.loading = false;
+          //localStorage.setItem()
+          this.router.navigate(['home/connected']);
         },
-        error => {
-          this.toastr.error(error);
+        (error: string) => {
+          console.log(error)
+          this.toastr.error("Incorrect credentials");
           this.loading = false;
         }
       )
+  }
+
+  goToHomePage() {
+    if (this.userLogin.user.username !== null){
+      localStorage.setItem('currentUser', this.f['username'].value)
+      this.router.navigate(['/home/connected']);   
+    } else {
+      let user = this.userService.getUser(this.userLogin.user.username);
+      this.userService.logout(user);
+      localStorage.clear();
+      this.router.navigate(['/home']);
+    }
   }
 
 }

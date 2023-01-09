@@ -1,5 +1,5 @@
 .fx-not-found-container {
-    background-color: rgb(141,213,170);
+    background-color: #000000;
     padding-top: 120px;
     display: flex;
     align-items: center;
@@ -13,6 +13,6 @@
 
 .fx-not-found-text {
     font-size: 16px;
-    color: #7C7C7C;
+    color: #dddddd;
     margin-left: 60px;
 }

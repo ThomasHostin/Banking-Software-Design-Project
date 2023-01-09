@@ -1,18 +1,13 @@
-export const authApi = 'http://localhost:8082'
-export const tradeApi = 'http://localhost:8210'
-export const quoteApi = 'http://localhost:8220'
+export const myhApi = 'http://localhost:8082'
 
 export const backendUrl = {
   authService: {
-    authenticate: `${authApi}/user/authenticate`,
-    register: `${authApi}/user/register`,
+    login: `${myhApi}/user/login`,
+    register: `${myhApi}/user/register`,
+    authenticate: `${myhApi}/user/authenticate`,
+    isConnected: `${myhApi}/user/isConnected`,
+    logout: `${myhApi}/user/logout`,
+    getUser: `${myhApi}/user/username`,
+    getUserLogin: `${myhApi}/user/userlogin`,
   },
-  fxTradeService: {
-    getTransactions: `${tradeApi}/transactions`,
-    saveTransaction: `${tradeApi}/transactions`,
-  },
-  quoteService: {
-    getCurrencies: `${quoteApi}/currencies`,
-    getFxRate: `${quoteApi}/fx-rate`
-  }
 }

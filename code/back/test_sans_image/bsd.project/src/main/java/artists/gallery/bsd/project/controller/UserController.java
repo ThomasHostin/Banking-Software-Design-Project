@@ -4,6 +4,7 @@ import artists.gallery.bsd.project.model.User;
 import artists.gallery.bsd.project.services.UserService;
 import artists.gallery.bsd.project.vo.UserRequestVo;
 
+import artists.gallery.bsd.project.vo.UserTokenResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -35,13 +36,12 @@ public class UserController {
 
     @PostMapping("/user/register")
     @CrossOrigin
-    public ResponseEntity<String> registerNewUser(@RequestBody UserRequestVo userRequestVo) {
-        Boolean exist = userService.registerNewUser(userRequestVo);
-        String userName = userRequestVo.getUsername();
-        if (!exist) {
-            return new ResponseEntity<>("New user " + userName + " has been registered", HttpStatus.OK);
+    public ResponseEntity<User> registerNewUser(@RequestBody UserRequestVo userRequestVo) {
+        User user = userService.registerNewUser(userRequestVo);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("User name "+userName+" already exists", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -66,5 +66,16 @@ public class UserController {
     @CrossOrigin
     public void deleteUserById(@PathVariable Long userId){
         userService.deleteUserById(userId);
+    }
+
+    @PostMapping("/user/authenticate")
+    @CrossOrigin
+    public ResponseEntity<User> authenticate(@RequestBody UserRequestVo userRequestVo) {
+        User user = userService.validateUserCredentialsAndGenerateToken(userRequestVo);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }

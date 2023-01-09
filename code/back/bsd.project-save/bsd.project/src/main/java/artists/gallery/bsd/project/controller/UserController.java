@@ -1,6 +1,8 @@
 package artists.gallery.bsd.project.controller;
 
 import artists.gallery.bsd.project.model.User;
+import artists.gallery.bsd.project.model.UserLogin;
+import artists.gallery.bsd.project.services.UserLoginService;
 import artists.gallery.bsd.project.services.UserService;
 import artists.gallery.bsd.project.vo.UserRequestVo;
 
@@ -21,6 +23,10 @@ public class UserController {
     @Qualifier("userService")
     private UserService userService;
 
+    @Autowired
+    @Qualifier("userLoginService")
+    private UserLoginService userLoginService;
+
     @GetMapping("/user/{userId}")
     @CrossOrigin
     public UserRequestVo getUserById(@PathVariable Long userId) {
@@ -35,13 +41,13 @@ public class UserController {
 
     @PostMapping("/user/register")
     @CrossOrigin
-    public ResponseEntity<String> registerNewUser(@RequestBody UserRequestVo userRequestVo) {
-        Boolean exist = userService.registerNewUser(userRequestVo);
+    public ResponseEntity<User> registerNewUser(@RequestBody UserRequestVo userRequestVo) {
+        User user = userService.registerNewUser(userRequestVo);
         String userName = userRequestVo.getUsername();
-        if (!exist) {
-            return new ResponseEntity<>("New user " + userName + " has been registered", HttpStatus.OK);
+        if (user!=null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("User name "+userName+" already exists", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -50,6 +56,7 @@ public class UserController {
     public ResponseEntity<User> login(@RequestBody UserRequestVo userRequestVo) {
         User user = userService.login(userRequestVo);
         if (user != null) {
+            userLoginService.login(user);
             return new ResponseEntity<>(user, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -66,5 +73,43 @@ public class UserController {
     @CrossOrigin
     public void deleteUserById(@PathVariable Long userId){
         userService.deleteUserById(userId);
+    }
+
+    @GetMapping("/user/isConnected")
+    @CrossOrigin
+    public boolean isConnected(@RequestBody UserRequestVo userRequestVo){
+        User user = userService.findUser(userRequestVo.getUsername(), userRequestVo.getPassword());
+        UserLogin userLogin = userLoginService.findByUserId(user.getUserId());
+        if (userLogin!=null){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    @DeleteMapping("/user/logout")
+    @CrossOrigin
+    public void logoutByUserLoginId(@RequestParam("userId") Long userId) {
+        userLoginService.deleteByUserLoginId(userLoginService.findByUserId(userId).getUserLoginId());
+    }
+
+    @GetMapping("/user/username")
+    @CrossOrigin
+    public User findByUserName(@RequestParam("username") String userName){
+        return userService.findUserByUserName(userName);
+    }
+
+    @GetMapping("/user/userlogin")
+    @CrossOrigin
+    public UserLogin getUserLoginId(@RequestParam String userName){
+        User user = userService.findUserByUserName(userName);
+        UserLogin userLogin = userLoginService.findByUserId(user.getUserId());
+        return userLogin;
+    }
+
+    @GetMapping("/user/token")
+    @CrossOrigin
+    public UserLogin findByToken(@RequestParam String token){
+        return userLoginService.findByToken(token);
     }
 }

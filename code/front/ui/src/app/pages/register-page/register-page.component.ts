@@ -24,6 +24,7 @@ export class RegisterPageComponent implements OnInit {
 
   loading = false;
   submitted = false;
+  username = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +34,10 @@ export class RegisterPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    let currentUser = localStorage.getItem('currentUser');
+    if (currentUser !== null) {
+      this.username = currentUser;
+    }
   }
 
   // Convenience getter for easy access to form fields
@@ -75,10 +80,15 @@ export class RegisterPageComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         (error: string) => {
-          this.toastr.error(error);
+          console.log(error)
+          this.toastr.error("Choose an other username");
           this.loading = false;
         }
       )
+  }
+
+  goToHomePage() {
+    this.router.navigate(['/home']);
   }
 
 }

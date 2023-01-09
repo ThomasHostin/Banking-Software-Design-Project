@@ -5,7 +5,7 @@
   }
   
   .login-logo-container {
-    background-color: rgb(141,213,170);
+    background-color: rgb(0, 0, 0);
   }
   
   .fx-grayscale-logo {
@@ -41,4 +41,9 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
+  }
+  
+  
+  .login-logo-container:h {
+      background-color: rgb(0, 0, 0);
   }

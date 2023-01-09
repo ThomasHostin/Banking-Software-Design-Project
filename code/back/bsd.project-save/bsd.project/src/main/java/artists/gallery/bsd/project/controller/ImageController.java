@@ -4,6 +4,7 @@ import artists.gallery.bsd.project.model.Image;
 import artists.gallery.bsd.project.services.ImageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,7 @@ public class ImageController {
         return imageService.save(file, imageName, description);
     }
 
+    @Transactional
     @GetMapping("/image/{imageId}")
     public Image findImageById(@PathVariable Long imageId) {
         return imageService.findImageById(imageId);
