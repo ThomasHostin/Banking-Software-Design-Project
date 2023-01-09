@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Image } from 'src/app/models/image';
+import { ImageService } from 'src/app/services/image.service';
 
 @Component({
   selector: 'app-home-page',
@@ -9,14 +11,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HomePageComponent implements OnInit {
 
   returnUrl : string = '';
+  images : Image[] = [];
 
   constructor(
         private router: Router,
         private route: ActivatedRoute,
+        private imageService: ImageService
         ) { }
 
   ngOnInit(): void {
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+    // let howMany = 10;
+    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+    // this.images = this.imageService.getLatestImage(howMany);
   }
 
   goToLogin(): void {

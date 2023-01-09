@@ -33,7 +33,6 @@ export class HomePageConnectedComponent implements OnInit {
   }
 
   logout(username : string): void {
-    console.log("logout")
     let user: User = this.userService.getUser(username);
     this.userService.logout(user) as any;
     localStorage.clear();
