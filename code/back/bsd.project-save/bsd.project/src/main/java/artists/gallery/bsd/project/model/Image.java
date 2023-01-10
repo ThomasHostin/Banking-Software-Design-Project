@@ -36,7 +36,7 @@ public class Image {
     @Column(columnDefinition = "image_user_name")
     private String imageUserName;
     @Lob
-    @Column(columnDefinition = "image")
+    @Column(columnDefinition = "image_data")
     private byte[] imageData;
 
     @Lob
@@ -91,19 +91,19 @@ public class Image {
         this.imageUserName = imageUserName;
     }
 
-    public byte[] getImageData() {
-        return imageData;
-    }
-
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
-    }
-
     public List<String> getImageHashtags() {
         return imageHashtags;
     }
 
     public void setImageHashtags(List<String> imageHashtags) {
         this.imageHashtags = imageHashtags;
+    }
+
+    public byte[] getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(byte[] imageData) {
+        this.imageData = imageData;
     }
 }

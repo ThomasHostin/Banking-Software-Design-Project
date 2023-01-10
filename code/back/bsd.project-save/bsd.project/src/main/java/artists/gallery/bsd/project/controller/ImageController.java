@@ -36,7 +36,7 @@ public class ImageController {
 
     @Transactional
     @GetMapping("image/latest")
-    public List<Image> findLatestImage(@RequestParam("how-many") Long howMany){
+    public String findLatestImage(@RequestParam("how-many") Long howMany){
         return imageService.findLatestImage(howMany);
     }
 

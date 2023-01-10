@@ -19,8 +19,8 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query(value="SELECT i.* FROM images_table i WHERE i.image_user_name = ?1 ORDER BY i.image_id DESC LIMIT = ?2, ?3", nativeQuery = true)
     public List<Image> findLatestImageByUserName(String imageUserName, Long untilWhat, Long fromWhich);
 
-    @Query(value="SELECT i.* FROM images_table i ORDER BY i.image_id DESC LIMIT ?1", nativeQuery = true)
-    public  List<Image> findLatestImage(Long howMany);
+    @Query(value="SELECT i.image_data FROM images_table i ORDER BY i.image_id DESC LIMIT ?1", nativeQuery = true)
+    public  String findLatestImage(Long howMany);
 
     @Query(value="SELECT i.* FROM images_tables i WHERE i.image_user_name = ?1", nativeQuery = true)
     public List<Image> findAllByUserName(String imageUserName);

@@ -43,6 +43,8 @@ import { ProfilePageComponent } from './pages/profile-page/profile-page.componen
   providers: [
     UserService,
     AuthGuard,
+    AppComponent,
+    ProfilePageComponent
   ],
   bootstrap: [AppComponent]
 })

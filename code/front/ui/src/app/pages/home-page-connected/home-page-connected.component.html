@@ -22,4 +22,18 @@
 <!-- Home page content -->
 <div class="container mt-5">
     <h2>Recent Images</h2>
+    <div>
+        <input type="file" name="file" id="file" class="inputfile" (change)="getImage($event)" style="display:none;" />
+        <label for="file">Add Image</label>
+    </div>
+    <ul>
+        <p id="injection"></p>
+        <li>
+            <div class="latest-image" id="image-1">
+            <img [src]="imageBase64" *ngIf="imageBase64" width="400" height="300" />
+        </div>
+        </li>
+    </ul>
+
+    
 </div>

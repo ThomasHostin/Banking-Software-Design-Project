@@ -5,7 +5,7 @@ export class Image {
     imageType: string = '';
     imageSize: number = NaN;
     imageUserName: string = '';
-    imageData: ArrayBuffer = new ArrayBuffer(1024);
+    imageData: string = '';
     imageHashtags: string[] = [''];
 
 }

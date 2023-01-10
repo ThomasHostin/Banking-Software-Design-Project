@@ -32,7 +32,6 @@ export class LoginPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    localStorage.clear();
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
 
   }
@@ -71,13 +70,15 @@ export class LoginPageComponent implements OnInit {
   }
 
   goToHomePage() {
-    if (this.userLogin.user.username !== null){
+    let currentUser = localStorage.getItem('currentUser');
+    if (currentUser !== ''){
+      localStorage.setItem('currentUser', '')
       localStorage.setItem('currentUser', this.f['username'].value)
       this.router.navigate(['/home/connected']);   
     } else {
+      localStorage.setItem('currentUser', '')
       let user = this.userService.getUser(this.userLogin.user.username);
       this.userService.logout(user);
-      localStorage.clear();
       this.router.navigate(['/home']);
     }
   }

@@ -27,7 +27,6 @@ export class NotFoundPageComponent implements OnInit {
     if (currentUser!==null){
       this.router.navigate(['/home/connected']);
     } else {
-      localStorage.clear()
       this.router.navigate(['/home']);
     }
     
